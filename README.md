@@ -16,4 +16,9 @@
 
 *[simple-library-api](simple-library-api)*
 
+
+## Author
+
+- [Dorian López](https://www.linkedin.com/in/dorian-lorz/)
+
 ---
