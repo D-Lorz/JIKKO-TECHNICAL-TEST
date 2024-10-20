@@ -62,6 +62,9 @@ $ npm run start:prod
 
 ## API Endpoints
 
+### Swagger
+- **GET /api/**: Access the API documentation through Swagger.
+
 ### Books
 - **GET /api/v1/books**: Retrieve a list of all books.
 - **GET /api/v1/books/:id**: Retrieve details of a specific book by ID.

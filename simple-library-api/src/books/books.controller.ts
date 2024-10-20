@@ -45,8 +45,8 @@ export class BooksController {
   // Endpoint to update a book by ID
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  async updateBook(@Param('id') id: string, @Body() updateBookDto: Partial<UpdateBookDto>) {
-    const book = await this.booksService.updateBook(String(id), updateBookDto);
+  async updateBook(@Param('id') id: string, @Body() bookData: UpdateBookDto) {
+    const book = await this.booksService.updateBook(String(id), bookData);
     if (!book) {
       throw new NotFoundException(`Book with ID ${id} does not exist.`);
     }

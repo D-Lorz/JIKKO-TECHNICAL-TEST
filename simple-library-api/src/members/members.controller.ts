@@ -33,7 +33,7 @@ export class MembersController {
   // Endpoint to update a member by ID
   @Put(':id')
   @HttpCode(HttpStatus.OK)
-  updateMember(@Param('id') id: string, @Body() member: Partial<UpdateMemberDto>) {
+  updateMember(@Param('id') id: string, @Body() member: UpdateMemberDto) {
     return this.membersService.updateMember(id, member);
   }
 
