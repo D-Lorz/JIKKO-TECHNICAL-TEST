@@ -20,11 +20,7 @@ export class BooksController {
   @Get(':id')
   @HttpCode(HttpStatus.OK) // Set HTTP status code to 200
   async getBook(@Param('id') id: string) {
-    const book = await this.booksService.getBook(String(id));
-    if (!book) {
-      throw new NotFoundException(`Book with ID ${id} does not exist.`); // 404 Not Found
-    }
-    return book;
+    return await this.booksService.getBook(String(id));
   }
 
   // Endpoint to retrieve books by status
@@ -46,20 +42,14 @@ export class BooksController {
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   async updateBook(@Param('id') id: string, @Body() bookData: UpdateBookDto) {
-    const book = await this.booksService.updateBook(String(id), bookData);
-    if (!book) {
-      throw new NotFoundException(`Book with ID ${id} does not exist.`);
-    }
-    return book;
+    return await this.booksService.updateBook(String(id), bookData);
   }
 
   // Endpoint to delete a book by ID
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT) // Set HTTP status code to 204
   async deleteBook(@Param('id') id: string) {
-    const book = await this.booksService.deleteBook(String(id));
-    if (!book) {
-      throw new NotFoundException(`Book with ID ${id} does not exist.`);
-    }
+    return await this.booksService.deleteBook(String(id));
+    
   }
 }

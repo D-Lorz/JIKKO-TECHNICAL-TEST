@@ -34,14 +34,14 @@ model Library {
 }
 
 model Member {
-  id            String   @id @default(uuid())
-  firstName     String
-  lastName      String
-  email         String   @unique
-  memberId      String   @unique
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now()) @updatedAt
-  borrowedBooks Book[]
+  id             String   @id @default(uuid())
+  firstName      String
+  lastName       String
+  email          String   @unique
+  membershipCode String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+  borrowedBooks  Book[]
 }
 
 enum BookStatus {

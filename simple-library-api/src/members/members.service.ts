@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { PrismaService } from '@/prisma.service';
@@ -7,23 +7,32 @@ import { PrismaService } from '@/prisma.service';
 export class MembersService {
   constructor(private prisma: PrismaService) { }
 
+  // Private helper method to check if a member exists
+  private async checkMemberExists(id: string) {
+    const memberFound = await this.prisma.member.findUnique({
+      where: { id },
+      include: {
+        borrowedBooks: true, // Relation to library
+      },
+    });
+    if (!memberFound) {
+      throw new NotFoundException(`Member with ID ${id} does not exist.`);
+    }
+    return memberFound;
+  }
+
   // Get all members from the database
-  getMembers() {
+  async getMembers() {
     return this.prisma.member.findMany({
       include: {
-        borrowedBooks: true,
+        borrowedBooks: { include: { library: true } }, // Relation to library
       }
     });
   }
 
   // Get a member by ID from the database
-  getMember(id: string) {
-    return this.prisma.member.findUnique({
-      where: { id },
-      include: {
-        borrowedBooks: true,
-      }
-    });
+  async getMember(id: string) {
+    return await this.checkMemberExists(id);
   }
 
   // Create a new member in the database
@@ -38,13 +47,16 @@ export class MembersService {
     } catch (error) {
       // Verify if the error is a duplicate key error
       if (error.code === 'P2002') { // Prisma error code for duplicate key
-        throw new ConflictException(`The member with ID ${newMember.memberId} already exists.`);
+        throw new ConflictException(`The member with ID ${newMember.membershipCode} already exists.`);
       }
       throw error;
     }
   }
 
   async updateMember(memberId: string, updateData: Partial<UpdateMemberDto>): Promise<UpdateMemberDto> {
+
+    // Check if the member exists
+    await this.checkMemberExists(memberId);
     const { borrowedBooks, ...otherData } = updateData;
 
     // Prepare data to update
@@ -75,7 +87,7 @@ export class MembersService {
 
       const nonExistentBooks = borrowedBooks.filter(id => !existingBooks.some(book => book.id === id));
       if (nonExistentBooks.length > 0) {
-        throw new ConflictException(`The following books do not exist in the library: ${nonExistentBooks.join(', ')}`);
+        throw new ConflictException(`The following books do not exist in a library: ${nonExistentBooks.join(', ')}`);
       }
 
       // Get current borrowed books of the member
@@ -108,23 +120,22 @@ export class MembersService {
   }
 
   async deleteMember(id: string) {
-    // Get the borrowed books of the member
-    const member = await this.prisma.member.findUnique({
-      where: { id },
-      select: { borrowedBooks: true },
-    });
+    try {
+      const member = await this.checkMemberExists(id);
+      // If the member has borrowed books, update their status to available
+      if (member && member.borrowedBooks) {
+        await Promise.all(member.borrowedBooks.map(async (book) => {
+          await this.prisma.book.update({
+            where: { id: book.id },
+            data: { status: 'AVAILABLE' }, // Change status to available
+          });
+        }));
+      }
 
-    // If the member has borrowed books, update their status to available
-    if (member && member.borrowedBooks) {
-      await Promise.all(member.borrowedBooks.map(async (book) => {
-        await this.prisma.book.update({
-          where: { id: book.id },
-          data: { status: 'AVAILABLE' }, // Change status to available
-        });
-      }));
+      // Delete the member
+      return this.prisma.member.delete({ where: { id } });
+    } catch (error) {
+      throw error;
     }
-
-    // Delete the member
-    return this.prisma.member.delete({ where: { id } });
   }
 }

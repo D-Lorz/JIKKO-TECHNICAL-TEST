@@ -8,6 +8,21 @@ import { BookStatus } from '@prisma/client';
 export class BooksService {
   constructor(private prisma: PrismaService) { }
 
+  // Private helper method to check if a book exists
+  private async checkBookExists(id: string) {
+    const bookFound = await this.prisma.book.findUnique({ 
+      where: { id },
+      include: {
+        library: true, // Relation to library
+        borrowedBy: true, // Relation to member
+      },
+    });
+    if (!bookFound) {
+      throw new NotFoundException(`Book with ID ${id} does not exist.`);
+    }
+    return bookFound;
+  }
+
   // Get all books from the database
   async getBooks() {
     return this.prisma.book.findMany({
@@ -26,19 +41,7 @@ export class BooksService {
 
   // Get a book by ID from the database
   async getBook(id: string) {
-    const bookFound = await this.prisma.book.findUnique({ 
-      where: { id },
-      include: {
-        library: true, // Relation to library
-      },
-    });
-
-    // Throw an error if the book does not exist
-    if (!bookFound) {
-      throw new NotFoundException(`Book with ID ${id} does not exist.`);
-    }
-
-    return bookFound;
+    return await this.checkBookExists(id);
   }
 
   // Get books by status from the database
@@ -86,25 +89,46 @@ export class BooksService {
 
   // Update a book in the database
   async updateBook(id: string, book: UpdateBookDto) {
-    const bookFound = await this.prisma.book.update({
-      where: { id },
-      data: {
-        ...book,
-        // Update the status only if it is provided in the request body
-        status: book.status ? { set: book.status as BookStatus } : undefined,
-      },
-    });
+    try {
+      const existingBook = await this.checkBookExists(id);
 
-    // Throw an error if the book does not exist
-    if (!bookFound) {
-      throw new NotFoundException(`Book with ID ${id} does not exist.`);
+      // Validate if the book is available before updating it
+
+      if (book.borrowedById) {
+        // Only available books can be borrowed
+        if (existingBook.status === BookStatus.AVAILABLE) {
+          return await this.prisma.book.update({
+            where: { id },
+            data: {
+              borrowedBy: { connect: { id: book.borrowedById } },
+              status: BookStatus.BORROWED,
+            },
+          });
+        } else {
+          throw new ConflictException(`The book is not available for borrowing.`);
+        }
+      }
+
+      return await this.prisma.book.update({
+        where: { id },
+        data: {
+          ...book,
+          // Update the status only if it is provided in the request body
+          status: existingBook.status === BookStatus.BORROWED ? existingBook.status : book.status ? { set: book.status as BookStatus } : undefined,
+        },
+      });
+    } catch (error) {
+      throw error;
     }
-
-    return bookFound;
   }
 
   // Delete a book from the database
   async deleteBook(id: string) {
-    return this.prisma.book.delete({ where: { id } });
+    try {
+      await this.checkBookExists(id); // Check if the book exists
+      return await this.prisma.book.delete({ where: { id } });
+    } catch (error) {
+      throw error;
+    }
   }
 }

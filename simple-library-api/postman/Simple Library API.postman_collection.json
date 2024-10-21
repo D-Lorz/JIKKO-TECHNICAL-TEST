@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "396c9a8e-e104-4846-937d-b716660ab33e",
 		"name": "Simple Library API",
-		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"description": "# 🚀 Implementación de la Colección \"Simple Library API\" en Postman\n\n## Pasos para la Implementación\n\n### 1\\. Configurar Variables\n\nEs crucial que configures la variable `base_url` para que apunte a tu entorno de desarrollo. Para hacerlo:\n\n- Ve a la pestaña \"Variables\" en la colección.\n    \n- Asegúrate de que el valor de `base_url` esté configurado correctamente (por ejemplo, `http://localhost:8000`).\n    \n\n### 2\\. Enviar Solicitudes\n\nLa colección incluye varias solicitudes que puedes utilizar para interactuar con la API. Aquí hay un resumen de las principales solicitudes que deberías probar:\n\n#### **Libros**\n\n- **Obtener todos los libros**: Envía una solicitud GET a `{{base_url}}/api/v1/books`.\n    \n- **Obtener libro por ID**: Envía una solicitud GET a `{{base_url}}/api/v1/books/{id}`.\n    \n- **Crear un libro**: Envía una solicitud POST a `{{base_url}}/api/v1/books` con el siguiente cuerpo en formato JSON:\n    \n    ``` json\n      {\n          \"title\": \"Título del libro\",\n          \"author\": \"Autor del libro\",\n          \"bookCode\": \"Código del libro\",\n          \"publishedDate\": \"Fecha de publicación\"\n      }\n    \n     ```\n    \n- **Actualizar libro por ID**: Envía una solicitud PUT a `{{base_url}}/api/v1/books/{id}` con el cuerpo en formato JSON.\n    \n- **Eliminar libro por ID**: Envía una solicitud DELETE a `{{base_url}}/api/v1/books/{id}`.\n    \n\n#### **Bibliotecas**\n\n- **Obtener todas las bibliotecas**: Envía una solicitud GET a `{{base_url}}/api/v1/libraries`.\n    \n- **Crear una biblioteca**: Envía una solicitud POST a `{{base_url}}/api/v1/libraries` con el siguiente cuerpo en formato JSON:\n    \n    ``` json\n      {\n          \"name\": \"Nombre de la biblioteca\",\n          \"location\": \"Ubicación de la biblioteca\",\n          \"books\": [\n              {\n                  \"title\": \"Título del libro\",\n                  \"author\": \"Autor del libro\",\n                  \"bookCode\": \"Código del libro\",\n                  \"publishedDate\": \"Fecha de publicación\"\n              }\n          ]\n      }\n    \n     ```\n    \n- **Actualizar biblioteca por ID**: Envía una solicitud PUT a `{{base_url}}/api/v1/libraries/{id}` con el cuerpo en formato JSON.\n    \n- **Eliminar biblioteca por ID**: Envía una solicitud DELETE a `{{base_url}}/api/v1/libraries/{id}`.\n    \n\n#### **Miembros**\n\n- **Obtener todos los miembros**: Envía una solicitud GET a `{{base_url}}/api/v1/members`.\n    \n- **Crear un miembro**: Envía una solicitud POST a `{{base_url}}/api/v1/members` con el siguiente cuerpo en formato JSON:\n    \n    ``` json\n      {\n          \"firstName\": \"Nombre\",\n          \"lastName\": \"Apellido\",\n          \"email\": \"correo@example.com\",\n          \"membershipId\": \"ID del miembro\"\n      }\n    \n     ```\n    \n- **Actualizar miembro por ID**: Envía una solicitud PUT a `{{base_url}}/api/v1/members/{id}` con el cuerpo en formato JSON.\n    \n- **Eliminar miembro por ID**: Envía una solicitud DELETE a `{{base_url}}/api/v1/members/{id}`.\n    \n\n### 3\\. Verificar Respuestas\n\nDespués de enviar las solicitudes, verifica las respuestas en la pestaña \"Respuesta\" de Postman. Asegúrate de que los códigos de estado sean los esperados (200, 201, 204, 404, 500) y que los datos devueltos sean correctos.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "38100386"
 	},
@@ -64,7 +64,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/books/5629a7fb-8c83-4487-afc6-20ac2ba3e5fc",
+							"raw": "{{base_url}}/api/v1/books/7e739bcd-dde1-4078-ac06-1da39a321cc5",
 							"host": [
 								"{{base_url}}"
 							],
@@ -72,7 +72,7 @@
 								"api",
 								"v1",
 								"books",
-								"5629a7fb-8c83-4487-afc6-20ac2ba3e5fc"
+								"7e739bcd-dde1-4078-ac06-1da39a321cc5"
 							]
 						},
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -137,7 +137,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"The Great Gatsby\",\n    \"author\": \"F. Scott Fitzgerald\",\n    \"bookCode\": \"GG-1925\",\n    \"publishedDate\": \"2001-04-10T00:00:00.000Z\"\n}",
+							"raw": " {\n    \"title\": \"Shadows of Time\",\n    \"author\": \"Eleanor Whitman\",\n    \"bookCode\": \"ST004\",\n    \"publishedDate\": \"2023-12-10T00:00:00.000Z\"\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -181,7 +181,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"status\": \"AVAILABLE\"\n}",
+							"raw": "{\n    \"author\": \"Laura López\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -189,7 +189,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/books/5629a7fb-8c83-4487-afc6-20ac2ba3e5fc",
+							"raw": "{{base_url}}/api/v1/books/9da3baed-a544-4cec-9836-2dcc55d32ea8",
 							"host": [
 								"{{base_url}}"
 							],
@@ -197,7 +197,7 @@
 								"api",
 								"v1",
 								"books",
-								"5629a7fb-8c83-4487-afc6-20ac2ba3e5fc"
+								"9da3baed-a544-4cec-9836-2dcc55d32ea8"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -234,7 +234,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/books/2856df8d-a5ab-4f4e-9f6c-dade5a7692b2",
+							"raw": "{{base_url}}/api/v1/books/d565a27b-6e7f-41ad-9193-bd7955737b33",
 							"host": [
 								"{{base_url}}"
 							],
@@ -242,7 +242,7 @@
 								"api",
 								"v1",
 								"books",
-								"2856df8d-a5ab-4f4e-9f6c-dade5a7692b2"
+								"d565a27b-6e7f-41ad-9193-bd7955737b33"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -320,7 +320,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/libraries/fb3fa0f3-b3ef-4555-b0cf-5dd3b3094016",
+							"raw": "{{base_url}}/api/v1/libraries/c30ab248-8931-49f0-8350-c8f2bb409059",
 							"host": [
 								"{{base_url}}"
 							],
@@ -328,7 +328,7 @@
 								"api",
 								"v1",
 								"libraries",
-								"fb3fa0f3-b3ef-4555-b0cf-5dd3b3094016"
+								"c30ab248-8931-49f0-8350-c8f2bb409059"
 							]
 						},
 						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
@@ -357,7 +357,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Biblioteca Árbol de la Sabiduría\",\n    \"location\": \"Colina Verde\",\n    \"books\": [\n        {\n            \"title\": \"The Silent Voyager\",\n            \"author\": \"Elena Frost\",\n            \"bookCode\": \"SV-2023\",\n            \"publishedDate\": \"2023-01-15T00:00:00.000Z\"\n        }\n    ]\n}",
+							"raw": "{\n    \"name\": \"El Faro del Saber\",\n    \"location\": \"Santiago, Chile\",\n    \"books\": [\n      {\n        \"title\": \"El Guardián de la Luna\",\n        \"author\": \"Ricardo Vallejo\",\n        \"bookCode\": \"EGM003\",\n        \"publishedDate\": \"2019-02-20T00:00:00.000Z\"\n      }\n    ]\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -402,7 +402,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Bibliotieca El Rincon del Saber\"\n}",
+							"raw": "{\n    \"books\": [\"7e739bcd-dde1-4078-ac06-1da39a321cc5\"]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -410,7 +410,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/libraries/fb3fa0f3-b3ef-4555-b0cf-5dd3b3094016",
+							"raw": "{{base_url}}/api/v1/libraries/c30ab248-8931-49f0-8350-c8f2bb409059",
 							"host": [
 								"{{base_url}}"
 							],
@@ -418,7 +418,7 @@
 								"api",
 								"v1",
 								"libraries",
-								"fb3fa0f3-b3ef-4555-b0cf-5dd3b3094016"
+								"c30ab248-8931-49f0-8350-c8f2bb409059"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -455,7 +455,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/libraries/fb3fa0f3-b3ef-4555-b0cf-5dd3b3094016",
+							"raw": "{{base_url}}/api/v1/libraries/82b93316-54c3-4008-93f9-d862f50f622c",
 							"host": [
 								"{{base_url}}"
 							],
@@ -463,7 +463,7 @@
 								"api",
 								"v1",
 								"libraries",
-								"fb3fa0f3-b3ef-4555-b0cf-5dd3b3094016"
+								"82b93316-54c3-4008-93f9-d862f50f622c"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
@@ -575,7 +575,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"Aurelio\",\n    \"lastName\": \"Del Valle\",\n    \"email\": \"aurelio.delvalle@example.com\",\n    \"memberId\": \"MEM12345\"\n}",
+							"raw": "{\n    \"firstName\": \"Luna\",\n    \"lastName\": \"Montenegro\",\n    \"email\": \"luna.montenegro@example.com\",\n    \"membershipCode\": \"MEM13579\"\n  }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -619,7 +619,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"borrowedBooks\": [\"e59a3814-8343-4f0b-87c7-2d88118b7098\", \"b4b0f166-8817-4166-981b-408754467086\"]\n}",
+							"raw": "{\n    \"lastName\": \"Franco\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -627,7 +627,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/members/02bbf1de-76f0-497a-939d-28a58b8516ad",
+							"raw": "{{base_url}}/api/v1/members/7df1d0be-9f07-490e-8b4e-83c845c8798e",
 							"host": [
 								"{{base_url}}"
 							],
@@ -635,7 +635,7 @@
 								"api",
 								"v1",
 								"members",
-								"02bbf1de-76f0-497a-939d-28a58b8516ad"
+								"7df1d0be-9f07-490e-8b4e-83c845c8798e"
 							]
 						},
 						"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -672,7 +672,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/members/a3b03ff5-a0af-4438-b921-52aef360ebca",
+							"raw": "{{base_url}}/api/v1/members/9c97919e-2cea-4f48-a0b6-5c9bd8ae96ce",
 							"host": [
 								"{{base_url}}"
 							],
@@ -680,7 +680,7 @@
 								"api",
 								"v1",
 								"members",
-								"a3b03ff5-a0af-4438-b921-52aef360ebca"
+								"9c97919e-2cea-4f48-a0b6-5c9bd8ae96ce"
 							]
 						},
 						"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."

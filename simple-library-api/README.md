@@ -1,21 +1,22 @@
 # Simple Library API
 
 ## Description
-This is a simple Library Management System designed to manage books, libraries, and members. 
+
+This is a simple Library Management System designed to manage books, libraries, and members.
 The system allows users to perform CRUD (Create, Read, Update, Delete) operations on the following entities:
 
-  - **Books**: Manage book details, including title, author, book code, publication date, and availability status.
-  - **Libraries**: Manage library information, including name, location, and list of books available in the library.
-  - **Members**: Manage member information, including name, membership ID, email, and borrowed books.
+- **Books**: Manage book details, including title, author, book code, publication date, and availability status.
+- **Libraries**: Manage library information, including name, location, and list of books available in the library.
+- **Members**: Manage member information, including name, membership ID, email, and borrowed books.
 
-  The API provides endpoints for:
-  - Adding new books, libraries, and members.
-  - Retrieving details of existing books, libraries, and members.
-  - Updating information for books, libraries, and members.
-  - Deleting books, libraries, and members from the system.
+The API provides endpoints for:
 
-  The system aims to simplify the management of library resources and enhance user experience in accessing and managing books.
+- Adding new books, libraries, and members.
+- Retrieving details of existing books, libraries, and members.
+- Updating information for books, libraries, and members.
+- Deleting books, libraries, and members from the system.
 
+The system aims to simplify the management of library resources and enhance user experience in accessing and managing books.
 
 ## Installation and Setup
 
@@ -38,6 +39,7 @@ These variables are essential for the application's configuration and should be 
 The application uses the NEON (PostgreSQL) database and runs on port 8000.
 
 > ### Example .env file:
+>
 > ```.env
 > DB_USER=
 > DB_PASSWORD=
@@ -58,14 +60,20 @@ $ npm run start:dev
 
 # production mode
 $ npm run start:prod
+
+# Prisma commands
+$ npx prisma migrate dev  # Apply migrations
+$ npx prisma generate      # Generate Prisma client
 ```
 
 ## API Endpoints
 
 ### Swagger
+
 - **GET /api/**: Access the API documentation through Swagger.
 
 ### Books
+
 - **GET /api/v1/books**: Retrieve a list of all books.
 - **GET /api/v1/books/:id**: Retrieve details of a specific book by ID.
 - **GET /api/v1/status**: Retrieve the availability status of a book by ID. (AVAILABLE or BORROWED)
@@ -74,6 +82,7 @@ $ npm run start:prod
 - **DELETE /api/v1/books/:id**: Delete a book by ID.
 
 ### Libraries
+
 - **GET /api/v1/libraries**: Retrieve a list of all libraries.
 - **GET /api/v1/libraries/:id**: Retrieve details of a specific library by ID.
 - **POST /api/v1/libraries**: Create a new library.
@@ -81,6 +90,7 @@ $ npm run start:prod
 - **DELETE /api/v1/libraries/:id**: Delete a library by ID.
 
 ### Members
+
 - **GET /api/v1/members**: Retrieve a list of all members.
 - **GET /api/v1/members/:id**: Retrieve details of a specific member by ID.
 - **POST /api/v1/members**: Create a new member.
@@ -97,7 +107,6 @@ $ npm run start:prod
 - **Morgan**: HTTP request logger middleware for Node.js, used for logging requests in development mode.
 - **Class-validator**: A library for validating objects in TypeScript, used for validating incoming request data.
 - **CORS**: Configured to allow cross-origin requests, ensuring the API can be accessed from different domains.
-
 
 ## Author
 

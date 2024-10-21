@@ -13,7 +13,7 @@ export class CreateLibraryDto {
     @IsNotEmpty()
     location: string;
 
-    @ApiPropertyOptional({ description: 'An array of books in the library', example: [{ title: '1984', author: 'George Orwell' }] })
+    @ApiPropertyOptional({ description: 'An array of books in the library, using boodId or attributes', example: [{ bookId: 'fb3fa0f3-b3ef-4555-b0cf-5dd3b3094016' }, { title: '1984', author: 'George Orwell' }] })
     @IsArray()
     @IsOptional()
     books?: booksDto[];
